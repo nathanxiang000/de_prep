@@ -3,7 +3,7 @@
 ## Practice: E-commerce Platform
 
 **Requirements**
-
+!!!
 - Track daily sales totals by product category
 - Analyze customer purchase history for segmentation
 - Calculate average order value (AOV) and customer lifetime value (CLV)
