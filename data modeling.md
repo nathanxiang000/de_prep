@@ -120,5 +120,59 @@
 +-------------------+
 
 
+Facebook and Instagram track user churn using a combination of detailed event logging, user-level activity tables, and large-scale ELT (Extract, Load, Transform) pipelines that aggregate and analyze user activity at daily and monthly intervals.
+
+### **How Facebook/Instagram Design Tables for Churn Stats**
+
+- **Event-Level Logging:**  
+  Every user interaction (logins, likes, posts, ad views, etc.) is logged in massive event tables, often partitioned by day for scalability. These tables typically include user IDs, event types, timestamps, and device information[5][6].
+
+- **User Activity Aggregates:**  
+  Nightly or hourly ELT jobs process these raw events to create aggregate tables:
+  - **Daily Active Users (DAU):** Aggregated by distinct user IDs active per day.
+  - **Monthly Active Users (MAU):** Aggregated by distinct user IDs active per month.
+  - **Churn Candidates:** Users who were active in a prior period but not in the current period are flagged as churned.
+
+- **Churn Table Example:**
+  ```
+  user_churn_stats
+  ├── user_id
+  ├── last_active_date
+  ├── churned_flag
+  ├── churned_date
+  ├── resurrected_flag
+  ├── period (day/month)
+  ```
+
+- **Resurrected Users:**  
+  Facebook/Instagram also track "resurrected users"-those who were inactive in the prior period but return in the current one, as this provides insight into re-engagement effectiveness[6].
+
+### **ELT for Aggregation**
+
+- **Daily/Monthly Jobs:**  
+  ELT pipelines run on distributed systems (e.g., Hive, Spark, Presto) to scan event logs, compute aggregates, and update summary tables for DAU, MAU, churn, and resurrection metrics[6].
+- **Churn Calculation:**  
+  Churn is typically defined as users who were active in the previous period (e.g., last month) but not in the current period. The calculation is automated and updated regularly to inform dashboards and machine learning models[7][8].
+
+-- example churn calc
+``` SQL
+with month_user as (
+select date_trunc('month',event_date) as month, user_id
+from events
+group by all 
+order by 1,2
+),
+t2 as (
+select current.month, current.user_id as active, next.user_id as churned
+from month_user current
+left join month_user next on current.user_id = next.user_id and current.month = next.month - interval '1 month'
+order by 1,2
+)
+select month, sum(case when churned is null then 1 else 0 end)*100.0/count(*) as churned_rate
+from t2
+group by 1 
+order by 1
+```
 
 
+## Practice 
