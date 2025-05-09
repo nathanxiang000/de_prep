@@ -78,71 +78,46 @@
 - Measure ad performance (impressions, clicks, conversions)
 - Analyze user behavior across different devices
 
-Facts
-
-content_event
-event_id
-event_time
-event_type (likes, comments, shares)
-content_id
-creator_id
-viewer_id
-IP
-device_type
-
-
-user
-user_id
-status
-name
-email
-phone
-created_at
-updated_at
-is_current
-
-content
-content_id
-content_type
-content_name
-content_description
-creator_id
-created_at
-updated_at
-is_current
-
-
-campaign_event
-event_id
-event_time
-event_type
-user_id
-campaign_id
-IP
-device_type
-
-campaign
-campaign_id
-campaign_type
-campaign_name
-campaign_description
-created_at
-starttime
-endtime
-
-- Track daily and monthly active users (DAU/MAU)
-```SQL
-select date_trunc(month, event_time) as monthly
-, count(distinct viewer_id) as MAU_cnt
-from content_event
-where event_time >= '2025-1-1'
-group by 1
-order by 1
-```
-- Analyze post engagement (likes, comments, shares) by content type
-
-
-
++-------------------+        +-------------------+        +-------------------+
+|      user         |        |     content       |        |    campaign       |
+|-------------------|        |-------------------|        |-------------------|
+| user_id (PK)      |        | content_id (PK)   |        | campaign_id (PK)  |
+| status            |        | content_type      |        | campaign_type     |
+| name              |        | content_name      |        | campaign_name     |
+| email             |        | content_desc      |        | campaign_desc     |
+| phone             |        | creator_id (FK)   |        | created_at        |
+| created_at        |        | created_at        |        | starttime         |
+| updated_at        |        | updated_at        |        | endtime           |
+| is_current        |        | is_current        |        +-------------------+
+| last_active_date  |        +-------------------+
+| churned_date      |
++-------------------+
+        |                         |
+        |                         |
+        v                         v
++-------------------+        +-------------------+
+|  content_event    |        |    ad_event       |
+|-------------------|        |-------------------|
+| event_id (PK)     |        | event_id (PK)     |
+| event_time        |        | event_time        |
+| event_type        |        | event_type        |
+| content_id (FK)   |        | campaign_id (FK)  |
+| creator_id (FK)   |        | user_id (FK)      |
+| viewer_id (FK)    |        | device_id (FK)    |
+| device_id (FK)    |        | ip_address        |
+| ip_address        |        | revenue           |
++-------------------+        | cost              |
+                             +-------------------+
+        |                         |
+        |                         |
+        v                         v
++-------------------+
+|     device        |
+|-------------------|
+| device_id (PK)    |
+| device_type       |
+| os                |
++-------------------+
 
 
 
