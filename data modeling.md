@@ -175,4 +175,149 @@ order by 1
 ```
 
 
-## Practice 
+## Practice: Video Streaming Service
+
+**Requirements**
+- Track viewing time and completion rates for content
+- Analyze user preferences and viewing patterns
+- Measure the effectiveness of content recommendations
+- Monitor streaming quality and user experience metrics
+- Analyze content performance by genre, creator, and release date
+
+> In a data modeling interview for a video streaming service like Netflix, **the best practice is to model at the most granular (“event-level”) fact table possible**, rather than just at the aggregated level. Here’s why and how this applies, with reference to industry practice and your requirements:
+
+---
+
+### **Granularity: Raw Events vs. Aggregations**
+
+#### **What Netflix Actually Does**
+
+- **Netflix and similar companies collect raw, event-level data** for every user interaction: every play, pause, seek, quality change, recommendation shown, click, etc. This is stored in massive, partitioned event tables.
+- **Aggregated “fact” tables** (like your Viewing_Fact) are then built via ELT/ETL jobs on top of these raw events for analytics and reporting.
+- This approach allows for maximum flexibility: you can always aggregate up, but you can’t “drill down” if you only have pre-aggregated data.
+
+### **What to Present in an Interview**
+
+- **State that you would design the fact tables at the event level.**
+    - For example: One row per viewing session or per playback event (e.g., play, pause, stop).
+    - Include all relevant foreign keys and metrics (timestamps, user, content, device, etc.).
+- **Explain that aggregates (like daily completion rates) are built from these raw events via ELT pipelines.**
+    - This is exactly how Netflix and other large-scale streaming platforms operate.
+
+---
+
+## **Example: Event-Level Fact Table**
+
+**Viewing_Event**
+- event_id (PK)
+- event_time
+- user_id (FK)
+- content_id (FK)
+- device_id (FK)
+- action_type (play, pause, stop, seek, etc.)
+- position_seconds
+- duration_seconds
+- is_recommended (0/1)
+- session_id
+
+You can then build **Viewing_Fact** (e.g., daily user-content aggregates) by summarizing Viewing_Event.
+
+Viewing_Fact (
+    date_key (FK),
+    time_key (FK),
+    user_key (FK),
+    content_key (FK),
+    device_key (FK),
+    viewing_duration,
+    completion_percentage,
+    is_recommended (0/1)
+)
+
+## **How to Explain in an Interview**
+
+> “I would design the core fact tables at the event level, capturing every user interaction with content (play, pause, stop, etc.). From these raw events, I’d build aggregate tables-like daily viewing facts or completion rates-using scheduled ELT pipelines. This approach is scalable and matches how leading streaming platforms like Netflix operate, ensuring we can answer both current and future analytics questions.”
+
+**Schema**
+
+```
++---------------------+         +---------------------+         +---------------------+
+|      user           |         |      device         |         |      date           |
+|---------------------|         |---------------------|         |---------------------|
+| user_id (PK)        |         | device_id (PK)      |         | date_key (PK)       |
+| name                |         | device_type         |         | calendar_date       |
+| email               |         | os                  |         | day_of_week         |
+| signup_date         |         | app_version         |         | month               |
+| ...                 |         | ...                 |         | year                |
++---------------------+         +---------------------+         +---------------------+
+
+         |                               |                               |
+         |                               |                               |
+         v                               v                               v
+
++---------------------+         +---------------------+         +---------------------+
+|      genre          |         |     creator         |         |      content        |
+|---------------------|         |---------------------|         |---------------------|
+| genre_id (PK)       |         | creator_id (PK)     |         | content_id (PK)     |
+| genre_name          |         | creator_name        |         | title               |
+| ...                 |         | ...                 |         | genre_id (FK)       |
++---------------------+         +---------------------+         | creator_id (FK)     |
+                                                                | release_date        |
+                                                                | content_type        |
+                                                                | ...                 |
+                                                                +---------------------+
+
+         |                               |                               |
+         |                               |                               |
+         v                               v                               v
+
++--------------------------------------------------------------------------------------+
+|                                viewing_event                                         |
+|--------------------------------------------------------------------------------------|
+| event_id (PK)           | date_key (FK)           | time_key (FK)                   |
+| user_id (FK)            | content_id (FK)         | device_id (FK)                  |
+| session_id              | event_time              | viewing_duration                |
+| action_type (play/pause/stop/seek)                | position_seconds                |
+| is_recommended (0/1)     | completion_percentage  | ...                             |
++--------------------------------------------------------------------------------------+
+
++--------------------------------------------------------------------------------------+
+|                             recommendation_event                                     |
+|--------------------------------------------------------------------------------------|
+| rec_event_id (PK)         | date_key (FK)           | user_id (FK)                   |
+| content_id (FK)           | recommendation_algorithm| was_clicked (0/1)              |
+| was_watched (0/1)         | rec_shown_time          | ...                            |
++--------------------------------------------------------------------------------------+
+
++--------------------------------------------------------------------------------------+
+|                             streaming_quality_event                                  |
+|--------------------------------------------------------------------------------------|
+| quality_event_id (PK)      | date_key (FK)           | time_key (FK)                  |
+| user_id (FK)               | content_id (FK)         | device_id (FK)                 |
+| buffering_instances        | average_bitrate         | stream_start_time              |
+| stream_end_time            | quality_change_type     | ...                            |
++--------------------------------------------------------------------------------------+
+
++---------------------+
+|     time            |
+|---------------------|
+| time_key (PK)       |
+| hour                |
+| minute              |
+| second              |
++---------------------+
+```
+
+## Practice: Ride-sharing Platform
+
+> Scenario: You're designing a data model for Uber to analyze ride performance, driver efficiency, and market dynamics.
+
+**Requirements**
+
+Track ride metrics (distance, duration, fare) by city and time
+Analyze driver performance and earnings
+Monitor supply-demand balance in real-time
+Measure the effectiveness of surge pricing
+Analyze user retention and frequency of use
+
+
+
