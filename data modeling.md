@@ -68,3 +68,15 @@
 +---------------------+
 
 
+## Practice: Social Media Analytics
+
+**Requirements**
+
+- Track daily and monthly active users (DAU/MAU)
+- Analyze post engagement (likes, comments, shares) by content type
+- Monitor user growth and churn rates
+- Measure ad performance (impressions, clicks, conversions)
+- Analyze user behavior across different devices
+
+123
+
