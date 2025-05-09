@@ -78,5 +78,72 @@
 - Measure ad performance (impressions, clicks, conversions)
 - Analyze user behavior across different devices
 
-123
+Facts
+
+content_event
+event_id
+event_time
+event_type (likes, comments, shares)
+content_id
+creator_id
+viewer_id
+IP
+device_type
+
+
+user
+user_id
+status
+name
+email
+phone
+created_at
+updated_at
+is_current
+
+content
+content_id
+content_type
+content_name
+content_description
+creator_id
+created_at
+updated_at
+is_current
+
+
+campaign_event
+event_id
+event_time
+event_type
+user_id
+campaign_id
+IP
+device_type
+
+campaign
+campaign_id
+campaign_type
+campaign_name
+campaign_description
+created_at
+starttime
+endtime
+
+- Track daily and monthly active users (DAU/MAU)
+```SQL
+select date_trunc(month, event_time) as monthly
+, count(distinct viewer_id) as MAU_cnt
+from content_event
+where event_time >= '2025-1-1'
+group by 1
+order by 1
+```
+- Analyze post engagement (likes, comments, shares) by content type
+
+
+
+
+
+
 
