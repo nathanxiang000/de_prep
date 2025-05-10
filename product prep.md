@@ -9,6 +9,209 @@ Wrap-up
 
 GAME struction: goal action metrics evaluaton
 
+## Key Meta Products
+
+## Core Meta/Facebook Products, Features, and Key Metrics
+
+Meta’s core product ecosystem includes Facebook, Instagram, WhatsApp, Messenger, Meta Quest (VR/AR), and Threads. Below is a detailed rundown of each, with their main functionalities, features, and the key metrics typically tracked for each product or feature.
+
+---
+
+## **Facebook**
+
+**Core Functionality:**  
+Social networking platform for connecting with friends, sharing content, joining groups, and interacting with Pages and businesses.
+
+**Key Features:**  
+- News Feed (AI-powered content recommendations)
+- Stories (short-lived photo/video posts)
+- Groups and Events
+- Marketplace (buy/sell items)
+- Facebook Shops (e-commerce for businesses)
+- Live Video
+- Reels (short-form video)
+- Pages (for businesses, creators, public figures)
+- Messenger integration
+
+**Key Metrics:**  
+- Daily Active Users (DAU), Monthly Active Users (MAU)
+- Time Spent per User
+- News Feed Engagement (likes, comments, shares)
+- Stories Engagement (views, replies)
+- Video Views and Watch Time
+- Group Participation Rate
+- Marketplace Transactions
+- Ad Impressions, Click-Through Rate (CTR), Conversion Rate
+- Retention and Churn Rates
+
+---
+
+## **Instagram**
+
+**Core Functionality:**  
+Photo and video sharing platform emphasizing visual storytelling, discovery, and influencer/brand engagement.
+
+**Key Features:**  
+- Feed (photos, videos, carousels)
+- Stories (ephemeral content)
+- Reels (short-form video, TikTok competitor)
+- Explore (personalized discovery)
+- IGTV (long-form video)
+- Shopping (in-app purchases, product tagging)
+- Direct Messaging
+- Live Video
+
+**Key Metrics:**  
+- DAU, MAU
+- Time Spent per User
+- Post Engagement (likes, comments, shares, saves)
+- Stories Engagement (views, replies, exits)
+- Reels Views, Watch Time, Shares
+- Shopping Clicks, Purchases
+- Follower Growth
+- Creator Activity and Retention
+
+---
+
+## **WhatsApp**
+
+**Core Functionality:**  
+End-to-end encrypted messaging and calling application for individuals and businesses.
+
+**Key Features:**  
+- 1:1 and Group Messaging
+- Voice and Video Calls
+- Status (ephemeral content)
+- WhatsApp Business API (for brands)
+- Payments (in select markets)
+- File and Media Sharing
+
+**Key Metrics:**  
+- DAU, MAU
+- Messages Sent per User
+- Call Volume (voice/video)
+- Status Views and Posts
+- Business Account Activity
+- Retention Rate
+
+---
+
+## **Messenger (Facebook Messenger)**
+
+**Core Functionality:**  
+Standalone messaging app integrated with Facebook for 1:1 and group communication.
+
+**Key Features:**  
+- Text, Voice, and Video Messaging
+- Group Chats
+- Stories (Messenger Day)
+- Payments (peer-to-peer, select regions)
+- Integration with Facebook Pages (customer service)
+- Bots and Automation
+
+**Key Metrics:**  
+- DAU, MAU
+- Messages Sent per User
+- Call Volume
+- Bot Interactions
+- Story Engagement
+
+---
+
+## **Meta Quest (VR/AR) & Meta Horizon**
+
+**Core Functionality:**  
+Virtual, mixed, and augmented reality hardware and software, supporting immersive experiences and the broader metaverse vision.
+
+**Key Features:**  
+- Meta Quest Devices (VR headsets: Quest, Quest 2, etc.)
+- Meta Horizon Worlds (social VR platform)
+- Meta Horizon Workrooms (virtual collaboration/workspaces)
+- Avatars (customizable virtual identities)
+- VR Games and Apps
+- Meta View (AI glasses)
+- Meta Credits (digital tokens for purchases)
+
+**Key Metrics:**  
+- Active Devices
+- Session Length in VR
+- Horizon Worlds Engagement (worlds visited, time spent, user-created content)
+- App/Game Downloads and Purchases
+- Avatar Customization Usage
+- Workrooms Participation
+- Retention and Repeat Usage
+
+---
+
+## **Threads**
+
+**Core Functionality:**  
+Text-based social app for public conversations, positioned as a competitor to Twitter/X.
+
+**Key Features:**  
+- Threaded Posts and Replies
+- Following and Followers
+- Integration with Instagram accounts
+- Trending Topics
+
+**Key Metrics:**  
+- DAU, MAU
+- Posts and Replies per User
+- Engagement Rate (likes, replies, reposts)
+- Follower Growth
+- Retention Rate
+
+---
+
+## **Meta Ads Ecosystem**
+
+**Core Functionality:**  
+Advertising platform integrated across Facebook, Instagram, Messenger, and Audience Network.
+
+**Key Features:**  
+- Ad Manager (campaign creation and analytics)
+- Audience Targeting and Retargeting
+- Brand Suitability Controls (e.g., comment moderation, profile exclusions)[2]
+- GenAI Video Creative Tools (AI-powered ad generation)[2]
+- Performance Reporting
+
+**Key Metrics:**  
+- Ad Impressions, Reach, Frequency
+- Click-Through Rate (CTR)
+- Conversion Rate
+- Cost Per Click (CPC), Cost Per Acquisition (CPA)
+- Return on Ad Spend (ROAS)
+- Video Completion Rate
+- Engagement Rate (likes, comments, shares on ads)
+
+---
+
+## **Summary Table**
+
+| Product         | Core Features                               | Key Metrics                                      |
+|-----------------|---------------------------------------------|--------------------------------------------------|
+| Facebook        | Feed, Stories, Groups, Marketplace, Shops   | DAU/MAU, Engagement, Watch Time, Ad Metrics      |
+| Instagram       | Feed, Stories, Reels, Explore, Shopping     | DAU/MAU, Engagement, Reels Views, Shopping CTR   |
+| WhatsApp        | Messaging, Calls, Status, Business API      | DAU/MAU, Messages Sent, Call Volume, Retention   |
+| Messenger       | Messaging, Calls, Stories, Bots             | DAU/MAU, Messages Sent, Call Volume, Engagement  |
+| Meta Quest/VR   | VR Devices, Horizon Worlds, Workrooms       | Active Devices, Session Length, Engagement       |
+| Threads         | Text Posts, Replies, Follows                | DAU/MAU, Posts, Engagement, Retention            |
+| Meta Ads        | Ad Manager, Targeting, GenAI Tools          | Impressions, CTR, CPA, ROAS, Video Completion    |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## What would be your metrics to evaluate the success of instagram reels? then pick the final north start metric. answer in a GAME structure
 
 ### GAME Framework for Evaluating Instagram Reels

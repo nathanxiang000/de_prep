@@ -307,17 +307,79 @@ Viewing_Fact (
 +---------------------+
 ```
 
-## Practice: Ride-sharing Platform
+## Practice: Threads
 
-> Scenario: You're designing a data model for Uber to analyze ride performance, driver efficiency, and market dynamics.
+Absolutely! Here’s a simplified **30-minute data modeling challenge** for Meta’s Threads:
 
-**Requirements**
+---
 
-Track ride metrics (distance, duration, fare) by city and time
-Analyze driver performance and earnings
-Monitor supply-demand balance in real-time
-Measure the effectiveness of surge pricing
-Analyze user retention and frequency of use
+## **Simplified Data Modeling Challenge: Meta Threads**
+
+### **Scenario**
+
+You are designing the backend data model for Threads, focusing on the core social features:  
+- Users can post threads (text posts)
+- Users can reply to threads (nested replies)
+- Users can follow each other
+- Users can like threads
+
+---
+
+### **Key Metrics to Track**
+
+1. **User Metrics**
+   - Daily Active Users (DAU)
+   - Follower count per user
+
+2. **Content Metrics**
+   - Threads created per day
+   - Replies per thread
+   - Likes per thread
+
+3. **Engagement Metrics**
+   - Likes per user per day
+   - Replies per user per day
+
+
+
++----------------+       +------------------+        +-----------------+
+|    User        |       |   Following      |        |   engagement_   |
+|----------------|       |------------------|        |     event       |
+| user_id  (PK)  |<----->| follower_id (FK) |        |-----------------|
+| user_name      |       | followee_id (FK) |        | event_id   (PK) |
+| user_email     |       | created_at       |        | event_type      |
+| user_password  |       | status           |        | event_time      |
+| created_at     |       +------------------+        | user_id   (FK)  |
+| updated_at     |                                    | thread_id (FK)  |
+| status         |                                    | reply_id  (FK?) |
+| is_current     |                                    | event_metadata  |
++----------------+                                    +-----------------+
+        |                                                    ^
+        |                                                    |
+        |                                                    |
+        |                                                    |
+        |                                                    |
+        |                                                    |
+        |                                                    |
+        |                                                    |
+        v                                                    |
++----------------+       +----------------+                  |
+|    Thread      |       |    Reply       |------------------+
+|----------------|       |----------------|
+| thread_id (PK) |<----->| reply_id  (PK) |
+| creator_id (FK)|       | thread_id (FK) |
+| thread_content |       | reply_user_id  |
+| created_at     |       | parent_reply_id|
+| updated_at     |       | reply_content  |
+| visibility     |       | created_at     |
++----------------+       | updated_at     |
+                         +----------------+
+
+
+
+
+
+
 
 
 
