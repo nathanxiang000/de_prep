@@ -38,7 +38,7 @@ When a key metric drops, use this framework to diagnose the issue systematically
 
 - **What:** What exactly changed? (e.g., 10% drop in Facebook Likes)
 - **When:** When did the change start? Is it sudden or gradual?
-- **Where:** Where is the change most pronounced? (e.g., specific geographies, devices, user segments)
+- **Where:** Where is the change most pronounced? (e.g., specific geographies, devices, user segments, product types)
 
 *Example:*
 > If Facebook notices a 10% drop in Likes:
@@ -360,4 +360,178 @@ Views alone can be gamed or reflect superficial engagement, while time spent bet
 | Creators            | Active creators, Reels per creator, reach, retention|                                    |
 | Viewers             | Active viewers, watch time, engagement, retention  |                                    |
 | Platform/Ecosystem  | Total Reels, virality, cross-surface engagement    | **Total Time Spent Watching Reels per Day** |
+
+
+## What would be your north star metric for Facebook Marketplace?
+
+
+
+## Clarifying Restatement
+
+**Goal:**  
+Evaluate the success of Facebook Marketplace as a peer-to-peer platform, ensuring both buyers and sellers can efficiently discover, connect, and complete transactions.
+
+---
+
+## GAME Framework
+
+### **Goal**
+Enable seamless, high-quality peer-to-peer transactions by connecting buyers and sellers, maximizing successful exchanges, and ensuring a positive experience for both parties.
+
+### **Actions**
+- **Buyers:**  
+  1. Browse/search for items  
+  2. View listings  
+  3. Contact sellers  
+  4. Exchange messages  
+  5. Complete transactions
+
+- **Sellers:**  
+  1. List items  
+  2. Respond to buyer inquiries  
+  3. Exchange messages  
+  4. Mark items as sold
+
+### **Metrics**
+To evaluate success, I’d measure:
+
+**Buyer-Side Metrics:**
+- **Search-to-contact rate:** % of buyers who contact a seller after searching/browsing
+- **Contact-to-transaction rate:** % of buyer-initiated contacts that result in a transaction
+- **Average time to find/purchase an item**
+- **Buyer satisfaction (post-transaction survey/NPS)**
+
+**Seller-Side Metrics:**
+- **Listing-to-contact rate:** % of listings that receive at least one buyer inquiry
+- **Contact-to-sale rate:** % of contacts that result in a sale
+- **Average time from listing to sale**
+- **Seller satisfaction (post-transaction survey/NPS)**
+
+**Combined Metrics:**
+- **Number of successful peer-to-peer transactions**
+- **Repeat usage rate:** % of buyers/sellers who return to transact again within 30 days
+- **Dispute/issue rate:** % of transactions reported as problematic
+
+### **Evaluation**
+The most meaningful metric should reflect the core product value: facilitating successful, high-quality transactions between buyers and sellers. Supporting metrics should ensure the process is efficient and satisfactory for both sides.
+
+---
+
+## Funnel Analysis
+
+Let’s visualize the typical peer-to-peer funnel for both buyers and sellers:
+
+### **Buyer Funnel**
+1. **Visits Marketplace**
+2. **Browses/Searches Listings**
+3. **Views Listing Details**
+4. **Contacts Seller**
+5. **Exchanges Messages**
+6. **Completes Transaction**
+
+### **Seller Funnel**
+1. **Lists Item**
+2. **Receives Buyer Contact**
+3. **Exchanges Messages**
+4. **Marks Item as Sold**
+
+At each stage, we can track:
+- **Drop-off rates:** Where are buyers/sellers disengaging?
+- **Conversion rates:** How efficiently do users move through the funnel?
+- **Bottlenecks:** Are there stages with high friction (e.g., lots of views but few contacts)?
+
+**Example:**  
+If many sellers list items but few receive contacts, we might investigate listing quality, search relevance, or buyer demand.
+
+---
+
+## North Star Metric Selection
+
+**North Star Metric:**  
+**Number of Successful Peer-to-Peer Transactions per Day (or Week/Month)**
+
+**Why?**
+- Directly measures the platform’s ability to connect buyers and sellers for successful exchanges.
+- Reflects the health and value of the Marketplace for both parties.
+- Easy to track and communicate, aligns with the core product goal.
+
+**Supporting Metrics:**  
+To ensure the North Star metric remains meaningful and healthy, I’d monitor:
+- **Contact-to-transaction rate** (Are conversations leading to sales?)
+- **Repeat usage rate** (Are users coming back to transact again?)
+- **Transaction satisfaction scores** (Are both buyers and sellers happy?)
+
+---
+
+## Summary Table
+
+| Funnel Stage               | Key Metric                       | Why It Matters                   |
+|----------------------------|----------------------------------|----------------------------------|
+| Browsing/Search            | Search-to-contact rate           | Are buyers finding relevant items? |
+| Listing                    | Listing-to-contact rate          | Are sellers’ items attracting interest? |
+| Messaging                  | Contact-to-transaction rate      | Are conversations leading to sales? |
+| Transaction Completion     | Successful transactions          | Are exchanges happening?         |
+| Post-Transaction           | Repeat usage, satisfaction score | Are users happy and returning?   |
+
+### What if there is a 10% drop in contact to transaction rate?
+
+To diagnose a 10% drop in the **contact-to-transaction rate** on Facebook Marketplace for peer-to-peer transactions, I would use a systematic approach-leveraging the "What, When, Where" framework and funnel analysis-to identify root causes and prioritize next steps.
+
+---
+
+## 1. **Clarify the Problem**
+
+- **What:** The contact-to-transaction rate has dropped by 10%. This means fewer buyer-seller conversations are resulting in completed transactions.
+- **When:** Determine when the drop started. Was it sudden or gradual? Did it coincide with any product changes, policy updates, or external events?
+- **Where:** Is the drop uniform across all categories, geographies, price segments, or user types? Or is it concentrated in specific areas (e.g., electronics, certain cities, mobile vs. desktop)?
+
+---
+
+## 2. **Funnel Breakdown and Hypothesis Generation**
+
+### **A. Funnel Stage Analysis**
+
+- **Stage 1:** Buyer contacts seller (via message)
+- **Stage 2:** Buyer and seller exchange messages (negotiation, info)
+- **Stage 3:** Transaction is completed (item marked as sold)
+
+A drop at this stage suggests an issue with negotiation, trust, item quality, or transaction logistics.
+
+### **B. Possible Causes and Diagnostic Steps**
+
+#### **a. Listing Quality or Accuracy**
+- Have there been changes in listing standards, photo requirements, or description guidelines?
+- Are buyers finding that items are misrepresented, leading to abandoned negotiations?
+
+#### **b. Price Sensitivity and Negotiation**
+- Has there been a shift in pricing trends (e.g., sellers less willing to negotiate, or prices have risen)?
+- Are buyers making more lowball offers that sellers reject?
+- Recent user data suggests that negotiation dynamics and price expectations can impact transaction closure, especially in certain price segments[1].
+
+#### **c. Trust and Safety Concerns**
+- Has there been an increase in reported scams, disputes, or negative feedback?
+- Are new safety warnings or restrictions discouraging users from completing transactions?
+
+#### **d. Messaging or Platform Issues**
+- Any recent bugs or changes in Messenger integration (e.g., messages not delivered, notifications not received)?
+- Are there delays or friction in communication channels?
+
+#### **e. Logistics and Convenience**
+- Are there new barriers to arranging pickups or deliveries (e.g., local restrictions, changes in payment or shipping options)?
+- Has the platform changed how transactions are marked as complete?
+
+#### **f. External Factors**
+- Are there seasonal trends, local events, or economic shifts affecting user behavior?
+
+
+## Example Diagnostic Flow
+
+| Step                  | Diagnostic Question                                      | Example Action                         |
+|-----------------------|---------------------------------------------------------|----------------------------------------|
+| What                  | Which transactions saw the biggest rate drop?           | Segment by category and price          |
+| When                  | Did the drop coincide with a specific date/event?       | Review release and incident logs       |
+| Where                 | Is the drop localized to certain users or regions?      | Analyze by geography and device        |
+| Why                   | What changed for users in this stage?                   | Survey users, review support tickets   |
+
+---
 
