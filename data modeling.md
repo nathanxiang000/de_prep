@@ -68,3 +68,395 @@
 +---------------------+
 
 
+## Practice: Social Media Analytics
+
+**Requirements**
+
+- Track daily and monthly active users (DAU/MAU)
+- Analyze post engagement (likes, comments, shares) by content type
+- Monitor user growth and churn rates
+- Measure ad performance (impressions, clicks, conversions)
+- Analyze user behavior across different devices
+
++-------------------+        +-------------------+        +-------------------+
+|      user         |        |     content       |        |    campaign       |
+|-------------------|        |-------------------|        |-------------------|
+| user_id (PK)      |        | content_id (PK)   |        | campaign_id (PK)  |
+| status            |        | content_type      |        | campaign_type     |
+| name              |        | content_name      |        | campaign_name     |
+| email             |        | content_desc      |        | campaign_desc     |
+| phone             |        | creator_id (FK)   |        | created_at        |
+| created_at        |        | created_at        |        | starttime         |
+| updated_at        |        | updated_at        |        | endtime           |
+| is_current        |        | is_current        |        +-------------------+
+| last_active_date  |        +-------------------+
+| churned_date      |
++-------------------+
+        |                         |
+        |                         |
+        v                         v
++-------------------+        +-------------------+
+|  content_event    |        |    ad_event       |
+|-------------------|        |-------------------|
+| event_id (PK)     |        | event_id (PK)     |
+| event_time        |        | event_time        |
+| event_type        |        | event_type        |
+| content_id (FK)   |        | campaign_id (FK)  |
+| creator_id (FK)   |        | user_id (FK)      |
+| viewer_id (FK)    |        | device_id (FK)    |
+| device_id (FK)    |        | ip_address        |
+| ip_address        |        | revenue           |
++-------------------+        | cost              |
+                             +-------------------+
+        |                         |
+        |                         |
+        v                         v
++-------------------+
+|     device        |
+|-------------------|
+| device_id (PK)    |
+| device_type       |
+| os                |
++-------------------+
+
+
+Facebook and Instagram track user churn using a combination of detailed event logging, user-level activity tables, and large-scale ELT (Extract, Load, Transform) pipelines that aggregate and analyze user activity at daily and monthly intervals.
+
+### **How Facebook/Instagram Design Tables for Churn Stats**
+
+- **Event-Level Logging:**  
+  Every user interaction (logins, likes, posts, ad views, etc.) is logged in massive event tables, often partitioned by day for scalability. These tables typically include user IDs, event types, timestamps, and device information[5][6].
+
+- **User Activity Aggregates:**  
+  Nightly or hourly ELT jobs process these raw events to create aggregate tables:
+  - **Daily Active Users (DAU):** Aggregated by distinct user IDs active per day.
+  - **Monthly Active Users (MAU):** Aggregated by distinct user IDs active per month.
+  - **Churn Candidates:** Users who were active in a prior period but not in the current period are flagged as churned.
+
+- **Churn Table Example:**
+  ```
+  user_churn_stats
+  ├── user_id
+  ├── last_active_date
+  ├── churned_flag
+  ├── churned_date
+  ├── resurrected_flag
+  ├── period (day/month)
+  ```
+
+- **Resurrected Users:**  
+  Facebook/Instagram also track "resurrected users"-those who were inactive in the prior period but return in the current one, as this provides insight into re-engagement effectiveness[6].
+
+### **ELT for Aggregation**
+
+- **Daily/Monthly Jobs:**  
+  ELT pipelines run on distributed systems (e.g., Hive, Spark, Presto) to scan event logs, compute aggregates, and update summary tables for DAU, MAU, churn, and resurrection metrics[6].
+- **Churn Calculation:**  
+  Churn is typically defined as users who were active in the previous period (e.g., last month) but not in the current period. The calculation is automated and updated regularly to inform dashboards and machine learning models[7][8].
+
+-- example churn calc
+``` SQL
+with month_user as (
+select date_trunc('month',event_date) as month, user_id
+from events
+group by all 
+order by 1,2
+),
+t2 as (
+select current.month, current.user_id as active, next.user_id as churned
+from month_user current
+left join month_user next on current.user_id = next.user_id and current.month = next.month - interval '1 month'
+order by 1,2
+)
+select month, sum(case when churned is null then 1 else 0 end)*100.0/count(*) as churned_rate
+from t2
+group by 1 
+order by 1
+```
+
+
+## Practice: Video Streaming Service
+
+**Requirements**
+- Track viewing time and completion rates for content
+- Analyze user preferences and viewing patterns
+- Measure the effectiveness of content recommendations
+- Monitor streaming quality and user experience metrics
+- Analyze content performance by genre, creator, and release date
+
+> In a data modeling interview for a video streaming service like Netflix, **the best practice is to model at the most granular (“event-level”) fact table possible**, rather than just at the aggregated level. Here’s why and how this applies, with reference to industry practice and your requirements:
+
+---
+
+### **Granularity: Raw Events vs. Aggregations**
+
+#### **What Netflix Actually Does**
+
+- **Netflix and similar companies collect raw, event-level data** for every user interaction: every play, pause, seek, quality change, recommendation shown, click, etc. This is stored in massive, partitioned event tables.
+- **Aggregated “fact” tables** (like your Viewing_Fact) are then built via ELT/ETL jobs on top of these raw events for analytics and reporting.
+- This approach allows for maximum flexibility: you can always aggregate up, but you can’t “drill down” if you only have pre-aggregated data.
+
+### **What to Present in an Interview**
+
+- **State that you would design the fact tables at the event level.**
+    - For example: One row per viewing session or per playback event (e.g., play, pause, stop).
+    - Include all relevant foreign keys and metrics (timestamps, user, content, device, etc.).
+- **Explain that aggregates (like daily completion rates) are built from these raw events via ELT pipelines.**
+    - This is exactly how Netflix and other large-scale streaming platforms operate.
+
+---
+
+## **Example: Event-Level Fact Table**
+
+**Viewing_Event**
+- event_id (PK)
+- event_time
+- user_id (FK)
+- content_id (FK)
+- device_id (FK)
+- action_type (play, pause, stop, seek, etc.)
+- position_seconds
+- duration_seconds
+- is_recommended (0/1)
+- session_id
+
+You can then build **Viewing_Fact** (e.g., daily user-content aggregates) by summarizing Viewing_Event.
+
+Viewing_Fact (
+    date_key (FK),
+    time_key (FK),
+    user_key (FK),
+    content_key (FK),
+    device_key (FK),
+    viewing_duration,
+    completion_percentage,
+    is_recommended (0/1)
+)
+
+## **How to Explain in an Interview**
+
+> “I would design the core fact tables at the event level, capturing every user interaction with content (play, pause, stop, etc.). From these raw events, I’d build aggregate tables-like daily viewing facts or completion rates-using scheduled ELT pipelines. This approach is scalable and matches how leading streaming platforms like Netflix operate, ensuring we can answer both current and future analytics questions.”
+
+**Schema**
+
+```
++---------------------+         +---------------------+         +---------------------+
+|      user           |         |      device         |         |      date           |
+|---------------------|         |---------------------|         |---------------------|
+| user_id (PK)        |         | device_id (PK)      |         | date_key (PK)       |
+| name                |         | device_type         |         | calendar_date       |
+| email               |         | os                  |         | day_of_week         |
+| signup_date         |         | app_version         |         | month               |
+| ...                 |         | ...                 |         | year                |
++---------------------+         +---------------------+         +---------------------+
+
+         |                               |                               |
+         |                               |                               |
+         v                               v                               v
+
++---------------------+         +---------------------+         +---------------------+
+|      genre          |         |     creator         |         |      content        |
+|---------------------|         |---------------------|         |---------------------|
+| genre_id (PK)       |         | creator_id (PK)     |         | content_id (PK)     |
+| genre_name          |         | creator_name        |         | title               |
+| ...                 |         | ...                 |         | genre_id (FK)       |
++---------------------+         +---------------------+         | creator_id (FK)     |
+                                                                | release_date        |
+                                                                | content_type        |
+                                                                | ...                 |
+                                                                +---------------------+
+
+         |                               |                               |
+         |                               |                               |
+         v                               v                               v
+
++--------------------------------------------------------------------------------------+
+|                                viewing_event                                         |
+|--------------------------------------------------------------------------------------|
+| event_id (PK)           | date_key (FK)           | time_key (FK)                   |
+| user_id (FK)            | content_id (FK)         | device_id (FK)                  |
+| session_id              | event_time              | viewing_duration                |
+| action_type (play/pause/stop/seek)                | position_seconds                |
+| is_recommended (0/1)     | completion_percentage  | ...                             |
++--------------------------------------------------------------------------------------+
+
++--------------------------------------------------------------------------------------+
+|                             recommendation_event                                     |
+|--------------------------------------------------------------------------------------|
+| rec_event_id (PK)         | date_key (FK)           | user_id (FK)                   |
+| content_id (FK)           | recommendation_algorithm| was_clicked (0/1)              |
+| was_watched (0/1)         | rec_shown_time          | ...                            |
++--------------------------------------------------------------------------------------+
+
++--------------------------------------------------------------------------------------+
+|                             streaming_quality_event                                  |
+|--------------------------------------------------------------------------------------|
+| quality_event_id (PK)      | date_key (FK)           | time_key (FK)                  |
+| user_id (FK)               | content_id (FK)         | device_id (FK)                 |
+| buffering_instances        | average_bitrate         | stream_start_time              |
+| stream_end_time            | quality_change_type     | ...                            |
++--------------------------------------------------------------------------------------+
+
++---------------------+
+|     time            |
+|---------------------|
+| time_key (PK)       |
+| hour                |
+| minute              |
+| second              |
++---------------------+
+```
+
+## Practice: Threads
+
+### **Scenario**
+
+You are designing the backend data model for Threads, focusing on the core social features:  
+- Users can post threads (text posts)
+- Users can reply to threads (nested replies)
+- Users can follow each other
+- Users can like threads
+
+---
+
+### **Key Metrics to Track**
+
+1. **User Metrics**
+   - Daily Active Users (DAU)
+   - Follower count per user
+
+2. **Content Metrics**
+   - Threads created per day
+   - Replies per thread
+   - Likes per thread
+
+3. **Engagement Metrics**
+   - Likes per user per day
+   - Replies per user per day
+
+-- include status for users
+-- include status for following relationships
+-- for replies, people can reply to a reply so need to include a parent reply id could be null
+
+```
++----------------+       +------------------+        +-----------------+
+|    User        |       |   Following      |        |   engagement_   |
+|----------------|       |------------------|        |     event       |
+| user_id  (PK)  |<----->| follower_id (FK) |        |-----------------|
+| user_name      |       | followee_id (FK) |        | event_id   (PK) |
+| user_email     |       | created_at       |        | event_type      |
+| user_password  |       | status           |        | event_time      |
+| created_at     |       +------------------+        | user_id   (FK)  |
+| updated_at     |                                    | thread_id (FK)  |
+| status         |                                    | reply_id  (FK?) |
+| is_current     |                                    | event_metadata  |
++----------------+                                    +-----------------+
+        |                                                    ^
+        |                                                    |
+        |                                                    |
+        |                                                    |
+        |                                                    |
+        |                                                    |
+        |                                                    |
+        |                                                    |
+        v                                                    |
++----------------+       +----------------+                  |
+|    Thread      |       |    Reply       |------------------+
+|----------------|       |----------------|
+| thread_id (PK) |<----->| reply_id  (PK) |
+| creator_id (FK)|       | thread_id (FK) |
+| thread_content |       | reply_user_id  |
+| created_at     |       | parent_reply_id|
+| updated_at     |       | reply_content  |
+| visibility     |       | created_at     |
++----------------+       | updated_at     |
+                         +----------------+
+```
+
+
+## Practice: WhatsApp
+
+### **Scenario**
+
+You are designing the backend data model for WhatsApp’s core messaging system.  
+The platform must support:
+
+- One-on-one and group messaging
+- Message delivery and read receipts
+- Media attachments (images, videos, etc.)
+- User-to-user blocking
+
+---
+
+### **Key Usage & Engagement Metrics to Track**
+
+1. **User Metrics**
+   - Daily Active Users (DAU), Monthly Active Users (MAU)
+   - New registrations per day
+   - User retention rates
+   - Number of blocked users per user
+
+2. **Messaging Metrics**
+   - Messages sent per user per day
+   - Messages delivered per user per day
+   - Messages read per user per day (open rate)
+   - Average message delivery time
+   - Media messages sent per user per day
+
+3. **Group Metrics**
+   - Number of active groups
+   - Messages sent per group per day
+   - Group membership changes (joins/leaves)
+
+---
+
+### **Requirements**
+
+**Design a data model (ER diagram or schema) that supports:**
+- Users, contacts, and blocking
+- One-on-one and group chats
+- Messages (text and media)
+- Message delivery and read receipts
+- Group membership
+
+### Solution
+--2 seperate tables for messages and message recipients; use sent_at delivered_at read_at in a wide format
+--seperate group from group members, joined at left at also wide format; role is for admin/member
+--block should include blocked at and expired at
+
++---------------------+         +---------------------+         +---------------------+
+|       users         |         |     messages        |         |  message_recipients|
+|---------------------|         |---------------------|         |---------------------|
+| user_id (PK)        |         | message_id (PK)     |         | message_id (PK,FK) |
+| phone_hash          |         | sender_id (FK)      |         | user_id (PK,FK)    |
+| created_at          |         | chat_id             |         | delivered_at       |
+| last_seen_at        |         | group_id (FK)       |         | read_at            |
+| status              |         | content             |         +---------------------+
++---------------------+         | sent_at             |
+                                | message_type        |
++---------------------+         +---------------------+         +---------------------+
+|      groups         |         |   group_members     |         |   group_events     |
+|---------------------|         |---------------------|         |---------------------|
+| group_id (PK)       |         | group_id (PK,FK)    |         | event_id (PK)      |
+| owner_id (FK)       |         | user_id (PK,FK)     |         | group_id (FK)      |
+| created_at          |         | joined_at           |         | user_id (FK)       |
+| group_status        |         | left_at             |         | event_type         |
++---------------------+         | role                |         | event_time         |
+                                +---------------------+         +---------------------+
+
++---------------------+         +---------------------+         +---------------------+
+|       media         |         |      blocks         |         |  message_events    |
+|---------------------|         |---------------------|         |---------------------|
+| media_id (PK)       |         | blocker_id (PK,FK)  |         | event_id (PK)      |
+| message_id (FK)     |         | blockee_id (PK,FK)  |         | message_id (FK)    |
+| s3_key              |         | blocked_at          |         | event_type         |
+| mime_type           |         | expires_at          |         | event_time         |
+| uploaded_at         |         +---------------------+         | receiver_id (FK)   |
++---------------------+                                         +---------------------+
+
+
+
+
+
+
+
