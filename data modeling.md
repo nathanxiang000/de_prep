@@ -309,12 +309,6 @@ Viewing_Fact (
 
 ## Practice: Threads
 
-Absolutely! Here’s a simplified **30-minute data modeling challenge** for Meta’s Threads:
-
----
-
-## **Simplified Data Modeling Challenge: Meta Threads**
-
 ### **Scenario**
 
 You are designing the backend data model for Threads, focusing on the core social features:  
@@ -340,8 +334,11 @@ You are designing the backend data model for Threads, focusing on the core socia
    - Likes per user per day
    - Replies per user per day
 
+-- include status for users
+-- include status for following relationships
+-- for replies, people can reply to a reply so need to include a parent reply id could be null
 
-
+```
 +----------------+       +------------------+        +-----------------+
 |    User        |       |   Following      |        |   engagement_   |
 |----------------|       |------------------|        |     event       |
@@ -374,8 +371,88 @@ You are designing the backend data model for Threads, focusing on the core socia
 | visibility     |       | created_at     |
 +----------------+       | updated_at     |
                          +----------------+
+```
 
 
+## Practice: WhatsApp
+
+### **Scenario**
+
+You are designing the backend data model for WhatsApp’s core messaging system.  
+The platform must support:
+
+- One-on-one and group messaging
+- Message delivery and read receipts
+- Media attachments (images, videos, etc.)
+- User-to-user blocking
+
+---
+
+### **Key Usage & Engagement Metrics to Track**
+
+1. **User Metrics**
+   - Daily Active Users (DAU), Monthly Active Users (MAU)
+   - New registrations per day
+   - User retention rates
+   - Number of blocked users per user
+
+2. **Messaging Metrics**
+   - Messages sent per user per day
+   - Messages delivered per user per day
+   - Messages read per user per day (open rate)
+   - Average message delivery time
+   - Media messages sent per user per day
+
+3. **Group Metrics**
+   - Number of active groups
+   - Messages sent per group per day
+   - Group membership changes (joins/leaves)
+
+---
+
+### **Requirements**
+
+**Design a data model (ER diagram or schema) that supports:**
+- Users, contacts, and blocking
+- One-on-one and group chats
+- Messages (text and media)
+- Message delivery and read receipts
+- Group membership
+
+### Solution
+--2 seperate tables for messages and message recipients; use sent_at delivered_at read_at in a wide format
+--seperate group from group members, joined at left at also wide format; role is for admin/member
+--block should include blocked at and expired at
+
++---------------------+         +---------------------+         +---------------------+
+|       users         |         |     messages        |         |  message_recipients|
+|---------------------|         |---------------------|         |---------------------|
+| user_id (PK)        |         | message_id (PK)     |         | message_id (PK,FK) |
+| phone_hash          |         | sender_id (FK)      |         | user_id (PK,FK)    |
+| created_at          |         | chat_id             |         | delivered_at       |
+| last_seen_at        |         | group_id (FK)       |         | read_at            |
+| status              |         | content             |         +---------------------+
++---------------------+         | sent_at             |
+                                | message_type        |
++---------------------+         +---------------------+         +---------------------+
+|      groups         |         |   group_members     |         |   group_events     |
+|---------------------|         |---------------------|         |---------------------|
+| group_id (PK)       |         | group_id (PK,FK)    |         | event_id (PK)      |
+| owner_id (FK)       |         | user_id (PK,FK)     |         | group_id (FK)      |
+| created_at          |         | joined_at           |         | user_id (FK)       |
+| group_status        |         | left_at             |         | event_type         |
++---------------------+         | role                |         | event_time         |
+                                +---------------------+         +---------------------+
+
++---------------------+         +---------------------+         +---------------------+
+|       media         |         |      blocks         |         |  message_events    |
+|---------------------|         |---------------------|         |---------------------|
+| media_id (PK)       |         | blocker_id (PK,FK)  |         | event_id (PK)      |
+| message_id (FK)     |         | blockee_id (PK,FK)  |         | message_id (FK)    |
+| s3_key              |         | blocked_at          |         | event_type         |
+| mime_type           |         | expires_at          |         | event_time         |
+| uploaded_at         |         +---------------------+         | receiver_id (FK)   |
++---------------------+                                         +---------------------+
 
 
 

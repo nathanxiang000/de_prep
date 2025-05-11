@@ -1,21 +1,124 @@
-# Interview structure
+# Useful Frameworks for Answering Product Questions
 
-Select a product and describe what it does.
-Pick a feature/features then explain the goal and what the feature does?
-For each feature, describe how it is used by a user.
-For each feature, what metrics are needed to measure the feature’s effectiveness relative to goal.
-For each feature, how would you implement the measurement?
-Wrap-up
+## Useful Frameworks for Answering Product Metrics Interview Questions
 
-GAME struction: goal action metrics evaluaton
+A variety of frameworks can help structure your thinking and responses during product metrics interviews, especially for roles at companies like Meta. Below, I’ll expand on the most commonly used frameworks, explain their components, and illustrate each with examples using Meta’s products.
 
-## Key Meta Products
+---
+
+**GAME Framework (Goal, Actions, Metrics, Evaluation)**
+
+The GAME framework is widely recommended for defining and structuring product metrics. It ensures your metrics are tightly aligned with the product’s objectives and user behavior[1][2][4].
+
+- **Goals:** Define what you want to achieve. For Meta’s Facebook Feed, a goal might be “Increase user engagement.”
+- **Actions:** Identify key user actions that contribute to the goal, such as posting, commenting, liking, or sharing.
+- **Metrics:** Quantify those actions. For engagement, you might track daily active users (DAUs), average posts per user, or comments per session.
+- **Evaluation:** Assess if the chosen metrics accurately reflect progress toward the goal. For example, if DAUs drop, does it really mean engagement is down, or are users spending more time per session but visiting less frequently?[1][2][4]
+
+*Example:*
+> For Facebook Feed, you might set the goal as "maximize meaningful social interactions." Actions could include posting, commenting, and sharing. Metrics would be "number of comments per user per day" and "shares per post." Evaluation would involve checking if increases in these metrics correlate with longer session times or higher user satisfaction scores.
+
+---
+
+**Funnel Analysis**
+
+Funnel analysis breaks down the user journey into sequential steps, helping you identify where users drop off and optimize each stage.
+
+- **Stages:** For Meta’s Instagram Stories, a funnel could be: Story Created → Story Viewed → Story Replied To.
+- **Drop-Offs:** If you see a sharp drop between “Story Viewed” and “Story Replied To,” you can focus on improving features that encourage replies.
+
+*Example:*
+> On Facebook Marketplace, the funnel might be: Item Viewed → Message Sent to Seller → Transaction Completed. If many users view items but few message sellers, you might investigate friction in the messaging process.
+
+---
+
+**Metric Change Diagnosis (“What, When, Where”)**
+
+When a key metric drops, use this framework to diagnose the issue systematically[3][5]:
+
+- **What:** What exactly changed? (e.g., 10% drop in Facebook Likes)
+- **When:** When did the change start? Is it sudden or gradual?
+- **Where:** Where is the change most pronounced? (e.g., specific geographies, devices, user segments)
+
+*Example:*
+> If Facebook notices a 10% drop in Likes:
+> - What: Likes dropped by 10%.
+> - When: Drop started last week.
+> - Where: Drop is mostly on mobile devices and in the US.
+
+This approach helps you quickly narrow down potential causes and prioritize hypotheses for further investigation[5].
+
+---
+
+**AARRR (Pirate Metrics) Framework**
+
+AARRR stands for Acquisition, Activation, Retention, Referral, and Revenue. It’s useful for mapping and measuring the entire customer lifecycle[4].
+
+| Stage       | Example Metric for Meta Product (e.g., WhatsApp)            |
+|-------------|------------------------------------------------------------|
+| Acquisition | Number of new installs per day                             |
+| Activation  | Percentage of users who send a first message within 24 hrs |
+| Retention   | 7-day retention rate                                       |
+| Referral    | Number of invites sent per user                            |
+| Revenue     | In-app purchases or ad impressions per user                |
+
+---
+
+**HEART Framework**
+
+Developed by Google, HEART focuses on five dimensions: Happiness, Engagement, Adoption, Retention, and Task Success[4].
+
+| Dimension    | Example for Meta’s Facebook Groups           |
+|--------------|----------------------------------------------|
+| Happiness    | User satisfaction survey scores              |
+| Engagement   | Posts/comments per user per week             |
+| Adoption     | Number of new group joins per week           |
+| Retention    | Percentage of users active after 30 days     |
+| Task Success | Percentage of users who successfully create a post |
+
+---
+
+**North Star Metric (NSM) & One Metric That Matters (OMTM)**
+
+- **North Star Metric:** The single metric that best captures the core value your product delivers. For Instagram, this might be “number of daily photo shares.”
+- **OMTM:** Focuses on one metric that matters most for a team or period. For example, during a growth push, Facebook Messenger’s OMTM could be “messages sent per new user.”
+
+---
+
+**Impact Mapping**
+
+Impact mapping visually connects product goals to user personas and deliverables[4]. For example, if Meta wants to increase Reels engagement among Gen Z, the map would link that goal to features like “remix” or “collaborative reels,” and track resulting metrics.
+
+---
+
+## Summary Table
+
+| Framework         | Best For                           | Example with Meta Product                    |
+|-------------------|------------------------------------|----------------------------------------------|
+| GAME              | Defining & aligning metrics        | Facebook Feed engagement                     |
+| Funnel Analysis   | Diagnosing drop-offs in journeys   | Facebook Marketplace transaction funnel      |
+| What/When/Where   | Diagnosing metric changes          | Drop in Likes on Facebook                    |
+| AARRR             | Customer lifecycle metrics         | WhatsApp user growth and retention           |
+| HEART             | Holistic product health            | Facebook Groups engagement & satisfaction    |
+| NSM/OMTM          | Focusing team/company efforts      | Instagram daily photo shares                 |
+| Impact Mapping    | Connecting goals to deliverables   | Reels engagement for Gen Z                   |
+
+---
+
+## How to Use These in Interviews
+
+- **Clarify the question**: Ask about the goal and context.
+- **Pick a framework**: Use GAME for metric definition, Funnel or What/When/Where for diagnosis, AARRR or HEART for holistic views.
+- **Walk through the steps**: Clearly explain each stage, using Meta product examples.
+- **Prioritize actionable metrics**: Focus on those that drive real business/user value.
+
+
+
+# Key Meta Products
 
 ## Core Meta/Facebook Products, Features, and Key Metrics
 
 Meta’s core product ecosystem includes Facebook, Instagram, WhatsApp, Messenger, Meta Quest (VR/AR), and Threads. Below is a detailed rundown of each, with their main functionalities, features, and the key metrics typically tracked for each product or feature.
-
----
 
 ## **Facebook**
 
@@ -200,17 +303,7 @@ Advertising platform integrated across Facebook, Instagram, Messenger, and Audie
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+# Interview Question Examples
 
 ## What would be your metrics to evaluate the success of instagram reels? then pick the final north start metric. answer in a GAME structure
 
