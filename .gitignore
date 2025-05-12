@@ -1,0 +1,10 @@
+# Ignore all .log files
+*.log
+
+# Ignore a specific file
+secret.txt
+Meta Behavioral Questions.md
+
+## ignore folders
+.vscode/
+.ipynb_checkpoints/
