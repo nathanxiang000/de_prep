@@ -4,6 +4,8 @@
 
 A variety of frameworks can help structure your thinking and responses during product metrics interviews, especially for roles at companies like Meta. Below, I’ll expand on the most commonly used frameworks, explain their components, and illustrate each with examples using Meta’s products.
 
+Meta's mission is to "build the future of human connection and the technology that makes it possible"-empowering billions of people to share ideas, offer support, and make a difference globally
+
 ---
 
 **GAME Framework (Goal, Actions, Metrics, Evaluation)**
@@ -363,8 +365,6 @@ Views alone can be gamed or reflect superficial engagement, while time spent bet
 
 
 ## What would be your north star metric for Facebook Marketplace?
-
-
 
 ## Clarifying Restatement
 
