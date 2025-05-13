@@ -20,6 +20,13 @@ Answer:
 - Product was delivered on time, and the customer was happy. 
 - I am now the DA Lead. Product now being expanded to other customers, and I am proud of the impact it has on the business.
 
+### “Tell me about a recent day working that was really great and/or fun.”
+Answer:
+- i discovered approval rate low
+- low ip coverage 
+- feature calculation system update
+- I was able to work with DI to improve the data pipeline and enhance reporting capabilities.
+
 ## Proactive
 ### “Tell me about a time when you wanted to change something that was outside of your regular scope of work.”
 Answer:
@@ -47,6 +54,15 @@ Answer:
 - I was able to resolve the fraud incident, and the sales team was able to complete the deck on time.
 - I was able to manage both priorities and the sales team was happy with the results.
 
+## Perseverance
+### “Tell me about a time when you had to push through a difficult problem or blocker.”
+### “Tell me about a time when you needed to overcome external obstacles to complete a task or project.”
+### “Tell me about a time a project took longer than expected.”
+Answer:
+- ach data integration
+
+
+
 ## Understanding what is data engineering and why I choose it for me
 Answer:
 I chose data engineering because I enjoy building the foundational systems that enable data-driven decision-making. I believe that data engineering is crucial for ensuring data quality and accessibility, which ultimately drives business success.
@@ -64,8 +80,13 @@ Answer:
 ### How to use data to influence decisions
 - increase approval rate for fraud?
 
+
+
+
+
 ## Questions to ask the interviewer
 - How is success measured for data engineers at Meta? What does high impact look like in this role?
 - Are there any unique data challenges specific to Meta’s scale or product ecosystem that you think set it apart from other companies?
 - What does a typical day look like for a data engineer here, and how are projects prioritized?
 - what are the success indicators 30 days/60 days /90 days?
+
